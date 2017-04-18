@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.release.internal.Releaser;
 import org.springframework.cloud.release.internal.ReleaserProperties;
 import org.springframework.cloud.release.internal.pom.ProjectVersion;
+import org.springframework.cloud.release.internal.pom.Projects;
 
 /**
  * Releaser that gets input from console
@@ -36,9 +37,10 @@ public class SpringReleaser {
 				+ "for root folder [{}]. \n\nPress ENTER to continue {}", workingDir, MSG);
 		boolean skipPoms = skipStep();
 		ProjectVersion originalVersion = new ProjectVersion(project);
-		ProjectVersion changedVersion = new ProjectVersion(project);
+		Projects projects = this.releaser.retrieveVersionsFromSCRelease();
+		ProjectVersion changedVersion = projects.forName(project);
 		if (!skipPoms) {
-			changedVersion = this.releaser.updateProjectFromScRelease(project);
+			changedVersion = this.releaser.updateProjectFromScRelease(project, projects);
 		}
 		log.info("\n\n\n=== BUILD PROJECT ===\n\nPress ENTER to build the project {}", MSG);
 		boolean skipBuild = skipStep();
