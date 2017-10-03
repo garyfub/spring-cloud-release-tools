@@ -158,6 +158,12 @@ public class ReleaserProperties {
 		};
 
 		/**
+		 * Additional system properties that should be passed to the build / deploy commands.
+		 * The {{systemProps}}
+		 */
+		private String systemProperties = "";
+
+		/**
 		 * Max wait time in minutes for the process to finish
 		 */
 		private long waitTimeInMinutes = 20;
